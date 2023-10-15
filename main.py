@@ -12,7 +12,6 @@ import mlflow
 import mlflow.sklearn
 import dagshub
 from data_processing import transform_data
-
 # Load your raw data (assuming it's stored in a variable named df_raw)
 # If you load from a file, adjust accordingly
 df_raw = pd.read_csv('data/WeatherAUS.csv')
@@ -33,36 +32,8 @@ mlflow.set_registry_uri("https://dagshub.com/Sahar-dev/weather.mlflow")
 mlflow.log_param("dataset_size", len(df_raw))
 mlflow.log_param("train_test_split_ratio", 0.2)
 
-# # Random Forest Regressor
-# with mlflow.start_run(nested=True):  # Use nested=True to start a nested run
-#     random_forest_model = RandomForestRegressor(n_estimators=100, random_state=0)
-#     random_forest_model.fit(X_train_scaled, y_train)
-#     y_pred_random_forest = random_forest_model.predict(X_test_scaled)
+mlflow.set_experiment("retesting")
 
-#     # Log parameters for Random Forest
-#     mlflow.log_param("model", "RandomForestRegressor")
-#     mlflow.log_params(random_forest_model.get_params())
-
-#     # Log metrics for Random Forest
-#     accuracy_random_forest = accuracy_score(y_test, y_pred_random_forest.round())
-#     f1_random_forest = f1_score(y_test, y_pred_random_forest.round())
-#     mlflow.log_metric("accuracy", accuracy_random_forest)
-#     mlflow.log_metric("f1_score", f1_random_forest)
-#     print("Random Forest Model trained successfully_1")
-
-#     # # Log confusion matrix as an artifact
-#     # conf_matrix_random_forest = confusion_matrix(y_test, y_pred_random_forest.round())
-#     # # Log confusion matrix as a CSV file
-#     # conf_matrix_random_forest_df = pd.DataFrame(conf_matrix_random_forest)
-#     # conf_matrix_random_forest_df.to_csv("confusion_matrix_random_forest.csv", index=False)
-
-#     # # Log the CSV file as an artifact
-#     #mlflow.log_artifact("confusion_matrix_random_forest.csv", "confusion_matrix_random_forest.csv")
-
-#     # Save the Random Forest model
-#     mlflow.sklearn.log_model(random_forest_model, "RandomForestRegressor_model")
-#     print("Random Forest Model trained successfully_2")
-mlflow.set_experiment("3 models expierement")
 # LightGBM Regressor
 with mlflow.start_run(nested=True):
     model = lgb.LGBMRegressor(n_estimators=100, random_state=0)
@@ -81,7 +52,9 @@ with mlflow.start_run(nested=True):
     print("LGBMRegressor_model Model trained successfully")
     # Save the LightGBM model
     mlflow.sklearn.log_model(model, "LGBMRegressor_model")
-    print("LGBMRegressor_model Model logged successfully")
+    
+    # Register the model in the Model Registry
+    mlflow.register_model(f'runs:/{mlflow.active_run().info.run_id}/LGBMRegressor_model', "LGBMRegressor")
 
 # Bernoulli Naive Bayes
 with mlflow.start_run(nested=True):
@@ -101,7 +74,9 @@ with mlflow.start_run(nested=True):
     print("BernoulliNB_model Model trained successfully")
     # Save the Bernoulli Naive Bayes model
     mlflow.sklearn.log_model(model, "BernoulliNB_model")
-
+    
+    # Register the model in the Model Registry
+    mlflow.register_model(f'runs:/{mlflow.active_run().info.run_id}/BernoulliNB_model', "BernoulliNB")
 
 # CatBoost Classifier
 with mlflow.start_run(nested=True):
@@ -121,10 +96,14 @@ with mlflow.start_run(nested=True):
     print("CatBoostClassifier_model Model trained successfully")
     # Save the CatBoost model
     mlflow.sklearn.log_model(model, "CatBoostClassifier_model")
+    
+    # Register the model in the Model Registry
+    mlflow.register_model(f'runs:/{mlflow.active_run().info.run_id}/CatBoostClassifier_model', "CatBoostClassifier")
 
 # Check if there's an active run and end it
 if mlflow.active_run():
     mlflow.end_run()
+
 
 
 
