@@ -12,9 +12,9 @@ from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 import mlflow
 from weatherModel import TransactionModel
-from data_processing import clean_data_json
+from data_processing_json import clean_data_json
 import os
-
+from fastapi.responses import HTMLResponse
 os.environ['MLFLOW_TRACKING_USERNAME']= "Sahar-dev"
 os.environ["MLFLOW_TRACKING_PASSWORD"] = "1a82d2e1cf9c21f919dfb44e98e6eb57fc75ab0a"
 mlflow.set_tracking_uri("https://dagshub.com/Sahar-dev/weather.mlflow")
@@ -47,9 +47,9 @@ model = mlflow.pyfunc.load_model(logged_model)
 
 
 @app.get("/")
-def read_root():
-    return {"Hello": "to fraud detector app"}
-
+async def read_root():
+    with open("C:/Users/sahas/weather/frontend/dashboard.html", "r") as file:
+         return HTMLResponse(content=file.read(), status_code=200)
 
 # this endpoint receives data in the form of json (informations about one transaction)
 @app.post("/predict")
