@@ -9,6 +9,8 @@ import mlflow
 import pandas as pd
 from src.models.weatherModel import TransactionModel
 from src.preprocessing.data_processing_json import clean_data_json
+from frontend.app import main as st_main
+
 
 # Set MLflow tracking credentials and experiment information
 os.environ['MLFLOW_TRACKING_USERNAME'] = "Sahar-dev"
@@ -36,15 +38,19 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+# Mount the static files (if any)
+app.mount("/static", StaticFiles(directory="static"), name="static")
+
 # Define the root endpoint to serve the HTML page
 @app.get("/")
 async def read_root():
     with open("frontend/index.html", "r") as file:
         return HTMLResponse(content=file.read(), status_code=200)
-# Include your Streamlit apps
-from frontend.app import st_app  # Adjust the import path
-app.include_router(st_app.app, prefix="/app")
-
+@app.get("/streamlit", response_class=HTMLResponse)
+async def run_streamlit(request: Request):
+    # Run the Streamlit app logic from app.py
+    st_main()
+    return HTMLResponse(content="", status_code=200)
 # Define the predict endpoint
 @app.post("/predict")
 def predict(data: TransactionModel):
