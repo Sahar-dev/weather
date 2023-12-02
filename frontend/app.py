@@ -73,7 +73,7 @@ def main():
             "RainToday": str(rain_today),
         }
 
-        response = requests.post("http://127.0.0.1:8000/predict", json=request_data)
+        response = requests.post("https://weather-app-prediction.onrender.com/predict", json=request_data)
         predictions = response.json().get("predictions", [])
 
         if predictions == [0]:
