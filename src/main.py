@@ -41,6 +41,9 @@ app.add_middleware(
 async def read_root():
     with open("frontend/index.html", "r") as file:
         return HTMLResponse(content=file.read(), status_code=200)
+# Include your Streamlit apps
+from frontend.app import st_app  # Adjust the import path
+app.include_router(st_app.app, prefix="/app")
 
 # Define the predict endpoint
 @app.post("/predict")
