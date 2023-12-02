@@ -145,7 +145,7 @@ python-dotenv==1.0.0
 python-json-logger==2.0.7
 python-utils==3.8.1
 pytz==2023.3.post1
-pywin32==302  # or any version that is compatible
+pywin32==228   # or any version that is compatible
 
 pywinpty==2.0.12
 PyYAML==6.0.1
