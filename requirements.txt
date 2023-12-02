@@ -148,7 +148,7 @@ pytz==2023.3.post1
 
 #pywinpty==2.0.12
 PyYAML==6.0.1
-pyzmq==25.1.1
+pyzmq
 querystring-parser==1.2.4
 referencing==0.30.2
 requests==2.31.0
