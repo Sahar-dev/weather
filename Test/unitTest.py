@@ -2,8 +2,8 @@ from pathlib import Path
 import pickle
 import pandas as pd
 import sys
-from data_processing_json import clean_data_json
-from data_processing import transform_data
+from src.preprocessing.data_processing_json import clean_data_json
+from src.preprocessing.data_processing import transform_data
 import mlflow
 #from dotenv import load_dotenv
 import os
@@ -32,7 +32,7 @@ def test_model_use():
 
     df_mlflow=mlflow.search_runs(filter_string="metrics.F1_score_test < 1")
     print(df_mlflow.columns)
-    run_id = df_mlflow.loc[df_mlflow['F1_score_test'].idxmax()]['run_id']
+    run_id = df_mlflow.loc[df_mlflow['metrics.F1_score_test'].idxmax()]['run_id']
 
 
 
