@@ -39,7 +39,7 @@ app.add_middleware(
 # Define the root endpoint to serve the HTML page
 @app.get("/")
 async def read_root():
-    with open("C:/Users/sahas/weather/frontend/index.html", "r") as file:
+    with open("frontend/index.html", "r") as file:
         return HTMLResponse(content=file.read(), status_code=200)
 
 # Define the predict endpoint
