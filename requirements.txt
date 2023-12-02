@@ -206,7 +206,8 @@ websockets==11.0.3
 Werkzeug==2.2.2
 widgetsnbextension==3.6.6
 wsproto==1.2.0
-wxPython==4.2.1
+wxPython==4.1.1
+
 xgboost==2.0.2
 yarl==1.9.2
 zipp==3.17.0
