@@ -38,8 +38,6 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-# Mount the static files (if any)
-app.mount("/static", StaticFiles(directory="static"), name="static")
 
 # Define the root endpoint to serve the HTML page
 @app.get("/")
