@@ -50,7 +50,7 @@ async def read_root():
 
 # Define the root endpoint to serve the HTML page
 @app.get("/test")
-async def read_root():
+async def read_test():
     with open("frontend/index.html", "r") as file:
         return HTMLResponse(content=file.read(), status_code=200)
 
