@@ -44,6 +44,18 @@ app.add_middleware(
 async def read_root():
     with open("frontend/index.html", "r") as file:
         return HTMLResponse(content=file.read(), status_code=200)
+
+
+
+
+# Define the root endpoint to serve the HTML page
+@app.get("/test")
+async def read_root():
+    with open("frontend/index.html", "r") as file:
+        return HTMLResponse(content=file.read(), status_code=200)
+
+
+
 @app.get("/streamlit", response_class=HTMLResponse)
 async def run_streamlit(request: Request):
     # Run the Streamlit app logic from app.py
