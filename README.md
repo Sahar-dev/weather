@@ -1,12 +1,13 @@
 # Rainfall Prediction MLops Project
 
-Predict next-day rainfall in Australia using machine learning and MLOps.
+Predict next-day rainfall in Australia using machine learning and MLOps using [Kaggle dataset]( https://www.kaggle.com/datasets/jsphyg/weather-dataset-rattle-package)
 
 ## Features
 
 - Data Cleaning
 - Feature Selection
 - Model Training
+- Keeping track of the models using MLFlow
 - API with FastAPI
 - Frontend with Streamlit
 - Dashboard with Streamlit, HTML, and PowerBI
